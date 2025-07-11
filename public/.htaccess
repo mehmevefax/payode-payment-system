@@ -1,0 +1,26 @@
+# public/.htaccess
+
+# RewriteEngine'i aç
+RewriteEngine On
+
+# Base URL'yi belirle
+# Projenizin htdocs altında olduğu dizini buraya yazın.
+# Eğer payode klasörü doğrudan htdocs altındaysa: /payode/public/
+RewriteBase /payode/public/
+
+# Eğer istenen şey var olan bir dosya ise, PHP işlemine geçmeden doğrudan o dosyayı servis et
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Eğer istenen şey var olan bir dizin ise, PHP işlemine geçmeden doğrudan o dizini servis et
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# `admin` ile başlayan tüm istekleri admin.php'ye yönlendir
+RewriteRule ^admin/?(.*)$ admin.php [QSA,L]
+
+# `api` ile başlayan tüm istekleri api.php'ye yönlendir
+RewriteRule ^api/?(.*)$ api.php [QSA,L]
+
+# Diğer tüm istekleri (login, dashboard vb.) index.php'ye yönlendir
+RewriteRule ^(.*)$ index.php [QSA,L]
